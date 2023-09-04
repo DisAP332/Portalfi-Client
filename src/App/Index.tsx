@@ -1,13 +1,30 @@
-import { Login } from './Pages/Login'
-import './index.css'
+import { useEffect } from "react";
 
-function App() {
+import { useNavigate } from "react-router-dom";
+import { Navigation } from "./Pages/Site/Components/Navigation";
+import { Body } from "./Pages/Site/Components/Body";
+import { Container } from "react-bootstrap";
+export const App = () => {
 
-  return (
-    <div id='App'>
-      <Login />
-    </div>
-  )
+    const navigate = useNavigate()
+
+    function checkUser(){
+        const cookie = document.cookie.split("; ").find((row) => row.startsWith("JBWUserData"))?.split("=")[1]
+        if(!cookie){
+            navigate('/')
+        }
+    }
+
+    useEffect(() => {
+        checkUser()
+    }, [])
+
+    return (
+        <>
+            <div className="profile bg-light">
+                <Navigation />
+                <Body />
+            </div>
+        </>
+    )
 }
-
-export default App

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Display } from "./BodyComps/Display"
 import { Add } from "./BodyComps/Add"
+import { Button } from "react-bootstrap"
 
 export const Body = () => {
 
@@ -14,7 +15,7 @@ export const Body = () => {
     } catch(err) { console.log(err)}
 
     const [eventData, setEventData] = useState(Events)
-    const [mode, setMode] = useState('none')
+    const [mode, setMode] = useState('events')
     const [modeAction, setModeAction] = useState('add')
 
     const getEvents = async () => {
@@ -24,20 +25,18 @@ export const Body = () => {
     return (
         <> 
             <div className="Body">
-                <div className="topBar">
-                    <button onClick={() => { setMode('events'); getEvents();}}>
-                        Events
-                    </button>
-                </div>
-                <div className="bodyBottom">
+                <div className="appContainer bg-white">
+                    <div className="appNav bg-primary">
+                        <Button variant="dark">Events</Button>
+                    </div>
                     {
                         
                     mode === 'events'
                     ?
-                    <>          
+                    <div>   
                         <Display events={eventData} setEvents={setEventData}/>
-                        <Add modeAction={modeAction} user={UserCookie} setEvents={setEventData} />
-                    </>
+                        {/* <Add modeAction={modeAction} user={UserCookie} setEvents={setEventData} /> */}
+                    </div>
                     : 
                     <></>
                     }

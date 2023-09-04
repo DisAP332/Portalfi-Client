@@ -10,7 +10,7 @@ const login = (payload: object) => api.post(`/user/login`, payload)
 .then(res => {
     console.log(res.data)
     if (res.data.status === 'success'){
-        document.cookie = `JBWUserToken = ${JSON.stringify({ Authorization: `Bearer ${res.data.token}`})}`
+        document.cookie = `JBWUserToken = ${res.data.token}`
         document.cookie = `JBWUserData = ${JSON.stringify({ Data: `${res.data.user}` })}`
         document.cookie = `JBWEventData = ${JSON.stringify({ Data: `${res.data.EventData}` })}`
         return true
@@ -22,21 +22,31 @@ const login = (payload: object) => api.post(`/user/login`, payload)
 
 // posts //
 
-const createEvent = (payload: object) => api.post('/events/createEvent', payload)
+const Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserToken"))?.split("=")[1]
+
+
+const createEvent = (payload: object) => api.post('/events/createEvent', payload, { headers: {authorization: Token}})
 
 // get requests //
 const profile = () => api.get('/profile')
 
-const getAllEvents = () => api.get('/events/getEvents').then(res => {
+const getAllEvents = () => api.get('/events/getEvents', { headers: {authorization: Token}}).then(res => {
     document.cookie = `JBWEventData = ${JSON.stringify({ Data: `${res.data.Data}` })}`
     }
 )
 
-const deleteEvent = (payload: object) => api.delete(`/events/deleteEvent/${payload._id}`)
+const deleteEvent = (payload: object) => api.delete(`/events/deleteEvent/${payload._id}`, { headers: {authorization: Token}})
 
-const updateEvent = (payload: object) => api.put(`/events/updateEvent/${payload._id}`, payload)
+const updateEvent = (payload: object) => api.put(`/events/updateEvent/${payload._id}`, payload, { headers: {authorization: Token}})
+
+const data = new URLSearchParams({
+    token: 'a token'
+}).toString();
+
+const tokenTest = (payload: object) => api.post(`/profile/testing`, payload, { headers: {authorization: Token}})
 
 const apis = {
+    tokenTest,
     profile,
     login,
     deleteEvent,

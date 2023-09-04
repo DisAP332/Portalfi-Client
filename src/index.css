@@ -1,0 +1,283 @@
+#App {
+  width: 100vw;
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  pad: 0;
+}
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* fonts */
+
+@font-face {
+  font-family: JBW1;
+  src: url('./App/Assets/Fonts/Aloevera-OVoWO.ttf');
+}
+@font-face {
+  font-family: JBW2;
+  src: url('./App/Assets/Fonts/NatureBeautyPersonalUse-9Y2DK.ttf');
+}
+
+/* JBW Logo */
+
+.bannerFont1 {
+  font-family: JBW1;
+  color: blue;
+  font-size: 40px;
+}
+.bannerFont2 {
+  font-family: JBW2;
+  color: red;
+  font-size: 40px;
+}
+
+/* utility */
+
+:root {
+  --siteDark: #686868;
+  --siteMed: #b7b7b7;
+  --siteLite: #e8e8e8;
+}
+
+
+/* login screen */
+
+.loginScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  /* background-image: url('./App/Assets/Imgs/backdrop.jpg');
+  background-position: center;
+  background-size: cover; */
+}
+
+/* navigation */
+
+.logo {
+  height: 8vh;
+}
+.logo2 {
+  height: 6vh;
+  margin-left: 10px;
+}
+
+.Navigation {
+  width: 100vw;
+  height: 10vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr 2fr;
+}
+
+.Navigation > div:nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.Navigation > div:nth-child(1) > button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.Navigation > div:nth-child(2) {
+  display: flex;
+  justify-content: end;
+  margin-right: 20px;
+}
+
+.Navigation > div:nth-child(3) {
+
+  height: 100%;
+
+}
+
+/* Body */
+
+.Body {
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+  align-items: start !important;
+}
+
+.appContainer {
+  background-color: white;
+  height: 80vh;
+  width: 85vw;
+  border-right: 5px solid purple;
+  border-bottom: 5px solid blue;
+  border-left: 8px solid black;
+  border-bottom-right-radius: 100px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.appNav {
+  width: 100%;
+  height: 100%;
+}
+
+.Forms {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+}
+
+.Forms > form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Display Card */
+
+.Card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
+  border-bottom: 1px solid black;
+  width: 60vw;
+}
+
+.contDisp {
+  display: flex;
+  flex-direction: column;
+}
+
+.contDisp > div:nth-child(3){
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.cardContainer{
+  display: grid;
+  grid-auto-rows: 70px;
+  margin-top: 20px;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.cardHead {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1.5fr;
+  height: 40px;
+  width: 62vw;
+  border-top-right-radius: 30px;
+  border-bottom: 5px solid black;
+  color: white;
+  font-size: 20px;
+}
+
+.cardHead > p {
+  border-right: 3px solid white;
+  margin-left: 10px;
+}
+
+.deleteBtn {
+  background-color: rgb(255, 80, 80);
+  border: none;
+}
+
+.addBtn {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px !important;
+  transform: translateY(-10px);
+  font-size: 40px !important;
+}
+
+/* HamToXBtnCSS */
+
+#HTXB {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+
+#HTXB span {
+  display: block;
+  position: absolute;
+  height: 9px;
+  width: 100%;
+  background: #e4e4e4;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+}
+
+#HTXB span:nth-child(1) {
+  top: 0px;
+}
+
+#HTXB span:nth-child(2),#HTXB span:nth-child(3) {
+  top: 18px;
+}
+
+#HTXB span:nth-child(4) {
+  top: 36px;
+}
+
+#HTXB.open span:nth-child(1) {
+  top: 18px;
+  width: 0%;
+  left: 50%;
+}
+
+#HTXB.open span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#HTXB.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#HTXB.open span:nth-child(4) {
+  top: 18px;
+  width: 0%;
+  left: 50%;
+}

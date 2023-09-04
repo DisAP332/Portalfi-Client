@@ -1,5 +1,6 @@
 import { useState } from "react"
 import apis from "../../../../API"
+import { Button, Modal } from "react-bootstrap"
 
 export const Add = (Props) => {
 
@@ -19,73 +20,89 @@ export const Add = (Props) => {
         }
     }
 
-    const formatEventDate = (date) => {
-        console.log(date);
-    }
-
 
     const handleEventSubmit = () => {
         const event = new Event(eventDate, eventName, eventTime, eventDescription, eventCost);
         const Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserToken"))?.split("=")[1]
-        console.log(Props.user);
-        apis.createEvent({Data: event, User: Props.user, Token: Token});
-        apis.getAllEvents();
+
         new Promise((resolve, reject) => {
+            apis.createEvent({Data: event, User: Props.user, Token: Token});
             setTimeout(() => {
-                const EventsData = JSON.parse(document.cookie.split("; ").find((row) => row.startsWith("JBWEventData"))?.split("=")[1])
-                const Events = JSON.parse(EventsData.Data)
-                console.log(Events)
-                Props.setEvents(Events)
-                resolve
-            }, 1200)
+                apis.getAllEvents()
+                resolve()
+            }, 1000)
+        }).then(() => {
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const EventsData = JSON.parse(document.cookie.split("; ").find((row) => row.startsWith("JBWEventData"))?.split("=")[1])
+                    const Events = JSON.parse(EventsData.Data)
+                    Props.setEvents(Events)
+                    Props.setShowModal(false)
+                    resolve()
+                }, 500)
+            })
         })
     }
 
     return (
         <>
-                {Props.modeAction === 'add'
-                    ? 
-                    <div className="Forms">
-                        <h1>Add Event</h1>
-                        <form>
-                        Date: 
-                            <input 
-                            type="date"
-                            required
-                            onChange={(e) => setEventDate(e.target.value)} 
-                            />
+            <Modal show={Props.showModal} onHide={() => Props.setShowModal(false)}>
 
-                        Name:
-                            <input
-                            required
-                            onChange={(e) => setEventName(e.target.value)}
-                            />
+            <Modal.Header closeButton>
+                <Modal.Title>Add Event</Modal.Title>
+            </Modal.Header>
 
-                        Time Opens:
-                            <input 
-                            required
-                            type="time"
-                            onChange={(e) => setEventTime(e.target.value)}
-                            />
+            <Modal.Body>
+                <div className="Forms">
+                    <form>
+                    Date: 
+                        <input 
+                        type="date"
+                        required
+                        onChange={(e) => setEventDate(e.target.value)} 
+                        />
 
-                        Description:
-                            <textarea 
-                            required
-                            onChange={(e) => setEventDescription(e.target.value)}
-                            />
+                    Name:
+                        <input
+                        required
+                        onChange={(e) => setEventName(e.target.value)}
+                        />
 
-                        Door Cost:
-                            <input 
-                            required
-                            type="number"
-                            onChange={(e) => setEventCost(e.target.value)}
-                            />
+                    Time Opens:
+                        <input 
+                        required
+                        type="time"
+                        onChange={(e) => setEventTime(e.target.value)}
+                        />
 
-                        </form> 
-                        <button onClick={() => handleEventSubmit()}>SUBMIT</button>
-                    </div>
-                    : <></>
-                    }
+                    Description:
+                        <textarea 
+                        required
+                        onChange={(e) => setEventDescription(e.target.value)}
+                        />
+
+                    Door Cost:
+                        <input 
+                        required
+                        type="number"
+                        onChange={(e) => setEventCost(e.target.value)}
+                        />
+
+                    </form> 
+                </div>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => Props.setShowModal(false)}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={() => handleEventSubmit()}>
+                    Save
+                </Button>
+            </Modal.Footer>
+
+            </Modal>
+
         </>
     )
 }

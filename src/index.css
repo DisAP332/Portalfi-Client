@@ -157,6 +157,7 @@ button {
   grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
   border-bottom: 1px solid black;
   width: 60vw;
+  height: 70px;
 }
 
 .contDisp {
@@ -173,7 +174,6 @@ button {
 .cardContainer{
   display: grid;
   grid-auto-rows: 70px;
-  margin-top: 20px;
   max-height: 60vh;
   overflow: auto;
 }
@@ -187,6 +187,14 @@ button {
   border-bottom: 5px solid black;
   color: white;
   font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.descriptionBox {
+  display: flex;
+  max-height: 70px;
+  overflow: auto;
+  margin-right: 10px;
 }
 
 .cardHead > p {

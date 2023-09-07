@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
-import { Navigation } from "./Pages/Site/Components/Navigation";
-import { Body } from "./Pages/Site/Components/Body";
-import { Container } from "react-bootstrap";
+
+import { Navigation } from "./Components/Navigation";
+import { Body } from "./Components/Body";
+
+
+
 export const App = () => {
 
     const navigate = useNavigate()
@@ -21,7 +23,7 @@ export const App = () => {
 
     return (
         <>
-            <div className="profile bg-light">
+            <div className="profile bg-light d-none d-md-block">
                 <Navigation />
                 <Body />
             </div>

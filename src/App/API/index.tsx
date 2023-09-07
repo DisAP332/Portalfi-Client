@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from '../Cookies'
 
 const api = axios.create({
     baseURL: 'http://localhost:3000'
@@ -20,33 +21,77 @@ const login = (payload: object) => api.post(`/user/login`, payload)
     }
 })
 
-// posts //
-
-const Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserToken"))?.split("=")[1]
-
-
-const createEvent = (payload: object) => api.post('/events/createEvent', payload, { headers: {authorization: Token}})
-
-// get requests //
 const profile = () => api.get('/profile')
 
-const getAllEvents = () => api.get('/events/getEvents', { headers: {authorization: Token}}).then(res => {
-    document.cookie = `JBWEventData = ${JSON.stringify({ Data: `${res.data.Data}` })}`
-    }
-)
+// ------ EVENTS ---------- //
 
-const deleteEvent = (payload: object) => api.delete(`/events/deleteEvent/${payload._id}`, { headers: {authorization: Token}})
 
-const updateEvent = (payload: object) => api.put(`/events/updateEvent/${payload._id}`, payload, { headers: {authorization: Token}})
+const getAllEvents = () => {
+    return new Promise((resolve) => {
+        api.get('/events/getEvents', { headers: {authorization: Cookies.Token, user: Cookies.User}})
+        .then(res => {
+            if (res.data.auth === false){
+                window.alert('Session expired. Please log back in')
+                document.location.href='/'
+            }
+            if(!res.data.success){
+                console.log('Error in event retrieval: apis.getAllEvents')
+                resolve({success: false})
+            } else {
+                document.cookie = `JBWEventData = ${JSON.stringify({ Data: `${res.data.Data}` })}`
+                console.log('successfully retrieved events: apis.getAllEvents')
+                resolve({success: true})
+            }
+        })
+    })
+}
 
-const data = new URLSearchParams({
-    token: 'a token'
-}).toString();
+const createEvent = (payload: object) => {
+    return new Promise((resolve) => {
+        api.post('/events/createEvent', payload, { headers: {authorization: Cookies.Token}})
+        .then((res) => {
+            console.log(res.data.auth)
+            if (res.data.auth === false){
+                window.alert('Session expired. Please log back in')
+                document.location.href='/'
+            }
+            const data:{success: boolean, events: object, message: string} = res.data
+            resolve({data})
+        })
+    })
+}
 
-const tokenTest = (payload: object) => api.post(`/profile/testing`, payload, { headers: {authorization: Token}})
+const updateEvent = (payload: {_id: string}) => {
+    console.log(payload._id)
+    return new Promise((resolve) => {
+        api.put(`/events/updateEvent/${payload._id}`, payload, { headers: {authorization: Cookies.Token, user: Cookies.User}})
+        .then((res) => {
+            if (res.data.auth === false){
+                window.alert('Session expired. Please log back in')
+                document.location.href='/'
+            }
+            resolve(res)
+        })
+    })
+}
+
+// const createEvent = (payload: object) => api.post('/events/createEvent', payload, { headers: {authorization: Cookies.Token}})
+
+const deleteEvent = (payload: {_id: string}) => {
+    return new Promise((resolve) => {
+        api.delete(`/events/deleteEvent/${payload._id}`, { headers: {authorization: Cookies.Token, user: Cookies.User}})
+        .then((res) => {
+            if (res.data.auth === false){
+                window.alert('Session expired. Please log back in')
+                document.location.href='/'
+            }
+            resolve(res)
+        })
+    })
+}
+
 
 const apis = {
-    tokenTest,
     profile,
     login,
     deleteEvent,

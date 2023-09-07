@@ -9,6 +9,8 @@ export const Login = () => {
 
 
     class UserData {
+        username: string
+        password: string
         constructor(username: string, password: string){
             this.username = username,
             this.password = password

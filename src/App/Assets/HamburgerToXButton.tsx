@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const HamToXBtn = (Props) => {
+export const HamToXBtn = (Props: {show: Boolean}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 

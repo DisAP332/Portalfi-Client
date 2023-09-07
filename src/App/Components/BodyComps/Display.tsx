@@ -1,18 +1,18 @@
 import { useState } from "react"
+
 import { Cards } from "./Cards"
-import { Button, Modal } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { Add } from "./Add"
 
-export const Display = (Props) => {
 
-    const UserCookie = JSON.parse(document.cookie.split("; ").find((row) => row.startsWith("JBWUserData"))?.split("=")[1]).Data
+export const Display = (Props: {events: any, setEvents: Function}) => {
 
     const [showModal, setShowModal] = useState(false)
 
     return (
         <>
 
-        <Add showModal={showModal} setShowModal={setShowModal} user={UserCookie} setEvents={Props.setEvents}/>
+        <Add showModal={showModal} setShowModal={setShowModal} setEvents={Props.setEvents}/>
 
         {
         Props.events
@@ -27,9 +27,22 @@ export const Display = (Props) => {
                 <p>Cost</p>
             </div>
             <div className="cardContainer">
-                {Props.events ? Props.events.map(items => (
-                    <div key={items._id} className="Card"><Cards setEvents={Props.setEvents} {...items} /></div>
-                )) : <></>}
+                {
+                Props.events 
+                    ? 
+                    Props.events.map((items: {
+                        _id: string, 
+                        Name: string, 
+                        Date: string ,
+                        Time: string,
+                        Description: string,
+                        Cost: string,
+                    }) => (
+                        <div key={items._id} className="Card"><Cards setEvents={Props.setEvents} {...items} /></div>
+                    )) 
+                    : 
+                    <></>
+                }
             </div>
             <div>
                 <Button className="addBtn" variant="success" onClick={() => setShowModal(true)}>+</Button> 

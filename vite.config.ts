@@ -7,6 +7,9 @@ export default defineConfig({
   build: {
     target: 'esnext',
     sourcemap: true,
-  }
+  },
+  server: {
+    port: 8080,
+  },
 })
 

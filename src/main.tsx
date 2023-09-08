@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from 'react-bootstrap'
 import React from 'react'
 import { Login } from './App/Login/Login'
-import './index.css'
+import './App/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { App } from './App/Index'
 

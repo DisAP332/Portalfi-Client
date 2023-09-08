@@ -22,11 +22,11 @@ button {
 
 @font-face {
   font-family: JBW1;
-  src: url('./App/Assets/Fonts/Aloevera-OVoWO.ttf');
+  src: url('./Assets/Fonts/Aloevera-OVoWO.ttf');
 }
 @font-face {
   font-family: JBW2;
-  src: url('./App/Assets/Fonts/NatureBeautyPersonalUse-9Y2DK.ttf');
+  src: url('./Assets/Fonts/NatureBeautyPersonalUse-9Y2DK.ttf');
 }
 
 /* JBW Logo */

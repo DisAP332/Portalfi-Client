@@ -8,8 +8,5 @@ export default defineConfig({
     target: 'esnext',
     sourcemap: true,
   },
-  server: {
-    port: 8080,
-  },
 })
 

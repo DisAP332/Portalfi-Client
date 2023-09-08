@@ -1,5 +1,6 @@
 import { useState } from "react"
 import apis from "../App/API"
+import { Button } from "react-bootstrap"
 
 
 export const Login = () => {
@@ -36,6 +37,7 @@ export const Login = () => {
     <>
         <div className='loginScreen'>
             <div>
+                <Button onClick={() => apis.getAllEvents()}>TEST</Button>
                 <h1 className="bannerFont1">Jordan</h1><h1 className="bannerFont2">Bell</h1><h1 className="bannerFont1">Web Service</h1>
             </div>
             <h1>LOGIN</h1>

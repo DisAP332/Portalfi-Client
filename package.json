@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "start": "vite start",
     "predeploy": "npm run build",
+    "homepage": "https://disap332.github.io/Portalfi-Client/",
     "deploy": "gh-pages -d build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

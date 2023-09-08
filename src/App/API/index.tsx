@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from '../Cookies'
 
 const api = axios.create({
-    baseURL: 'http://portalfi-jbw.com/'
+    baseURL: 'https://portalfi-jbw.com/'
 })
 
 // user helpers //

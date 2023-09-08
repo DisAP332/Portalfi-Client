@@ -1,5 +1,5 @@
 import { useState } from "react"
-import apis from "../App/API"
+import apis from "../API"
 import { Button } from "react-bootstrap"
 
 

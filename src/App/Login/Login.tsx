@@ -1,6 +1,7 @@
 import { useState } from "react"
 import apis from "../API"
 import { Button } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 
 export const Login = () => {
@@ -18,6 +19,8 @@ export const Login = () => {
         }
     }
 
+    const navigate = useNavigate('/profile')
+
     const handleSubmit = () => {
 
         const userData = new UserData(username, password)
@@ -25,7 +28,7 @@ export const Login = () => {
         apis.login(userData).then((res) => {
             if(res === true){
                 console.log('logged in successfully')
-                location.replace(`${window.location.href}profile`)
+                navigate('/profile')
             } else {
                 alert('login unsuccessful')
             }

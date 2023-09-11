@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Display } from "./BodyComps/Display"
 import { Button } from "react-bootstrap"
 import Cookies from "../Cookies"
@@ -15,6 +15,10 @@ export const Body = () => {
     const [eventData, setEventData] = useState(Events)
     const [mode] = useState('events')
 
+    useEffect(() => {
+        console.log('setting event data')
+        setEventData(Events)
+    }, [])
 
     return (
         <> 

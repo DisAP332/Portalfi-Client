@@ -1,4 +1,16 @@
-const Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserToken"))?.split("=")[1];
+let Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserToken"))?.split("=")[1];
+
+const getTokenCookie = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserToken"))?.split("=")[1];
+            resolve(Token)
+        } catch (error) {
+            console.log(error)
+            reject({message: error})
+        }
+    } )
+}
 
 let Events: {Data: string}
 
@@ -63,7 +75,8 @@ const Cookies = {
     Token,
     Events,
     getEventsCookie,
-    getUserCookie
+    getUserCookie,
+    getTokenCookie
 }
 
 export default Cookies

@@ -26,10 +26,32 @@ const profile = () => api.get('/profile')
 
 // ------ EVENTS ---------- //
 
+let Token: string
+let User: string
 
-const getAllEvents = () => {
+function resetVerficationCookies(){
+        try {
+            Cookies.getTokenCookie()
+            .then((token: any) => {
+                console.log(token)
+                Token = token
+            })
+            Cookies.getUserCookie()
+            .then((user: any) => { 
+                User = user
+                return
+            })
+        } catch (error) {
+            return(error)
+        }
+
+}
+
+
+const getAllEvents = async () => {
+    await resetVerficationCookies()
     return new Promise((resolve) => {
-        api.get('/events/getEvents', { headers: {authorization: Cookies.Token, user: Cookies.User}})
+        api.get('/events/getEvents', { headers: {authorization: Token, user: User}})
         .then(res => {
             if (res.data.auth === false){
                 window.alert('Session expired. Please log back in')
@@ -47,9 +69,10 @@ const getAllEvents = () => {
     })
 }
 
-const createEvent = (payload: object) => {
+const createEvent = async (payload: object) => {
+    await resetVerficationCookies()
     return new Promise((resolve) => {
-        api.post('/events/createEvent', payload, { headers: {authorization: Cookies.Token}})
+        api.post('/events/createEvent', payload, { headers: {authorization: Token}})
         .then((res) => {
             console.log(res.data.auth)
             if (res.data.auth === false){
@@ -62,10 +85,10 @@ const createEvent = (payload: object) => {
     })
 }
 
-const updateEvent = (payload: {_id: string}) => {
-    console.log(payload._id)
+const updateEvent = async (payload: {_id: string}) => {
+    await resetVerficationCookies()
     return new Promise((resolve) => {
-        api.put(`/events/updateEvent/${payload._id}`, payload, { headers: {authorization: Cookies.Token, user: Cookies.User}})
+        api.put(`/events/updateEvent/${payload._id}`, payload, { headers: {authorization: Token, user: User}})
         .then((res) => {
             if (res.data.auth === false){
                 window.alert('Session expired. Please log back in')
@@ -78,9 +101,10 @@ const updateEvent = (payload: {_id: string}) => {
 
 // const createEvent = (payload: object) => api.post('/events/createEvent', payload, { headers: {authorization: Cookies.Token}})
 
-const deleteEvent = (payload: {_id: string}) => {
+const deleteEvent = async (payload: {_id: string}) => {
+    await resetVerficationCookies()
     return new Promise((resolve) => {
-        api.delete(`/events/deleteEvent/${payload._id}`, { headers: {authorization: Cookies.Token, user: Cookies.User}})
+        api.delete(`/events/deleteEvent/${payload._id}`, { headers: {authorization: Token, user: User}})
         .then((res) => {
             if (res.data.auth === false){
                 window.alert('Session expired. Please log back in')

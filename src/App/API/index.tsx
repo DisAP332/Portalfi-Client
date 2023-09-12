@@ -30,21 +30,20 @@ let Token: string
 let User: string
 
 function resetVerficationCookies(){
-        try {
-            Cookies.getTokenCookie()
-            .then((token: any) => {
-                console.log(token)
-                Token = token
-            })
-            Cookies.getUserCookie()
-            .then((user: any) => { 
-                User = user
-                return
-            })
-        } catch (error) {
-            return(error)
-        }
-
+    try {
+        Cookies.getTokenCookie()
+        .then((token: any) => {
+            console.log(token)
+            Token = token
+        })
+        Cookies.getUserCookie()
+        .then((user: any) => { 
+            User = user
+            return
+        })
+    } catch (error) {
+        return(error)
+    }
 }
 
 
@@ -72,7 +71,7 @@ const getAllEvents = async () => {
 const createEvent = async (payload: object) => {
     await resetVerficationCookies()
     return new Promise((resolve) => {
-        api.post('/events/createEvent', payload, { headers: {authorization: Token}})
+        api.post('/events/createEvent', payload, { headers: {authorization: Token, user: User}})
         .then((res) => {
             console.log(res.data.auth)
             if (res.data.auth === false){
@@ -99,7 +98,6 @@ const updateEvent = async (payload: {_id: string}) => {
     })
 }
 
-// const createEvent = (payload: object) => api.post('/events/createEvent', payload, { headers: {authorization: Cookies.Token}})
 
 const deleteEvent = async (payload: {_id: string}) => {
     await resetVerficationCookies()

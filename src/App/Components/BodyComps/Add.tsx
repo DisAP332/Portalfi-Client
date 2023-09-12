@@ -37,7 +37,7 @@ export const Add = (Props: {showModal: boolean, setShowModal: Function, setEvent
             eventData.cost
         );
         console.log('create event init')
-        await apis.createEvent({Data: event, User: Cookies.User, Token: Cookies.Token})
+        await apis.createEvent({Data: event})
         .then((results: any) => {
             console.log(results?.data)
             if(!results.data.success){

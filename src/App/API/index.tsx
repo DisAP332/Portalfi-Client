@@ -9,16 +9,17 @@ const api = axios.create({
 
 const login = (payload: object) => api.post(`/user/login`, payload)
 .then(res => {
-    console.log(res.data)
-    if (res.data.status === 'success'){
-        document.cookie = `JBWUserToken = ${res.data.token}`
-        document.cookie = `JBWUserData = ${JSON.stringify({ Data: `${res.data.user}` })}`
-        document.cookie = `JBWEventData = ${JSON.stringify({ Data: `${res.data.EventData}` })}`
-        return true
-    } else {
-        console.log('auth failed')
-        return false
-    }
+    return new Promise((resolve) => {
+        if (res.data.status === 'success'){
+            document.cookie = `JBWUserToken = ${res.data.token}`
+            document.cookie = `JBWUserData = ${JSON.stringify({ Data: `${res.data.user}` })}`
+            document.cookie = `JBWEventData = ${JSON.stringify({ Data: `${res.data.EventData}` })}`
+            resolve(true)
+        } else {
+            console.log('auth failed')
+            resolve(false)
+        } 
+    })
 })
 
 const profile = () => api.get('/profile')

@@ -5,19 +5,16 @@ import Cookies from "../Cookies"
 
 export const Body = () => {
 
-    let Events
-
-    try {
-        Events = JSON.parse(Cookies.Events.Data)
-        console.log(Events)
-    } catch(err) { console.log(err)}
-
-    const [eventData, setEventData] = useState(Events)
+    const [eventData, setEventData] = useState(Cookies.Events)
     const [mode] = useState('events')
 
     useEffect(() => {
-        console.log('setting event data')
-        setEventData(Events)
+        try {
+            Cookies.getEventsCookie()
+            .then((events: any) => {
+                return setEventData(events)
+            })
+        } catch(err) { console.log(err)}
     }, [])
 
     return (

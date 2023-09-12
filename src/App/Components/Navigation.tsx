@@ -6,11 +6,25 @@ import logo from '../Assets/Imgs/FullLogo_Transparent.png';
 import nameLogo from '../Assets/Imgs/Name_Logo.png';
 import ProfileIcon from '../Assets/Logos/profile.svg';
 import Cookies from "../Cookies";
+import { useEffect, useState } from "react";
 
 export const Navigation = () => {
 
+    const [user, setUser] = useState(Cookies.User)
+
+    useEffect(() => {
+        try {
+            Cookies.getUserCookie()
+            .then((user: any) => {
+                return setUser(user)
+            })
+        } catch(err) { console.log(err)}
+    }, [])  
+
     const navigate = useNavigate()
     const logout = () => {
+        // one liner for deleting all the cookies for domain
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
         navigate('/')
     }
     
@@ -25,7 +39,7 @@ export const Navigation = () => {
                 <Button onClick={() => logout()}>Logout</Button>
             </div>
             <div className="bg-primary">
-                <h1 className="text-light">{Cookies.User}</h1>
+                <h1 className="text-light">{user}</h1>
                 <img src={ProfileIcon} alt="profile icon" className="logo2" />
             </div>
         </div>

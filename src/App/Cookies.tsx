@@ -2,31 +2,58 @@ const Token = document.cookie.split("; ").find((row) => row.startsWith("JBWUserT
 
 let Events: {Data: string}
 
-Events = {Data: 'getting events...'}
-
-const getEventsCookie = () => {
-    const EventsData = document.cookie.split("; ").find((row) => row.startsWith("JBWEventData"))?.split("=")[1];
-    if (EventsData) {
-        Events = JSON.parse(EventsData!);
-        return Events
-    } else {
-        new Promise((resolve) => {
-            setTimeout(() => {
-                console.log('retrying to get events')
-                getEventsCookie();
-            }, 1000)
-        })
-    }
+let EventsData = document.cookie.split("; ").find((row) => row.startsWith("JBWEventData"))?.split("=")[1];
+if(EventsData){
+    EventsData = JSON.parse(EventsData!);
+    Events = JSON.parse(EventsData!.Data)
+    console.log(Events)
+} else {
+    Events = {Data: 'missing'}
 }
 
-getEventsCookie()
+function parsedEvent(){
+    EventsData = document.cookie.split("; ").find((row) => row.startsWith("JBWEventData"))?.split("=")[1];
+    EventsData = JSON.parse(EventsData!);
+    Events = JSON.parse(EventsData!.Data);
+    return
+}
 
-let user: {Data: string}
-let User
-const UserData = document.cookie.split("; ").find((row) => row.startsWith("JBWUserData"))?.split("=")[1];
+const getEventsCookie = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            parsedEvent()
+            resolve(Events)
+        } catch (error) {
+            console.log(error)
+            reject({message: error})
+        }
+    })
+}
+
+let User: any
+let UserData = document.cookie.split("; ").find((row) => row.startsWith("JBWUserData"))?.split("=")[1];
+
+function parsedUser() {
+    UserData = document.cookie.split("; ").find((row) => row.startsWith("JBWUserData"))?.split("=")[1];
+    User = JSON.parse(UserData!)
+    User = User.Data
+}
+
+const getUserCookie = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            parsedUser()
+            resolve(User)
+        } catch (error){
+            console.log(error)
+            reject({message: error})
+        }
+    })
+}
+
 if (UserData){
-    user = JSON.parse(UserData!)
-    User = user.Data   
+    User = JSON.parse(UserData!)
+    User = User.Data  
 } else {
     User = 'MISSING'
 }
@@ -35,6 +62,8 @@ const Cookies = {
     User,
     Token,
     Events,
+    getEventsCookie,
+    getUserCookie
 }
 
 export default Cookies

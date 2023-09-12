@@ -28,9 +28,9 @@ export const Display = (Props: {events: any, setEvents: Function}) => {
             </div>
             <div className="cardContainer">
                 {
-                Props.events 
+                Props?.events 
                     ? 
-                    Props.events.map((items: {
+                    Props?.events?.map((items: {
                         _id: string, 
                         Name: string, 
                         Date: string ,
